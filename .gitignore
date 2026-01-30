@@ -1,0 +1,15 @@
+.idea/
+*.iml
+.DS_Store
+bin/
+dist/
+build/
+*.exe
+*.out
+*.test
+coverage.out
+*.cov
+*.prof
+*.pprof
+*.log
+tmp/
