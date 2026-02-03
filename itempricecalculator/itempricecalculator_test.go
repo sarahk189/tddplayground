@@ -24,16 +24,34 @@ Non-existing item types should return an error.
 // 3. One Truck item, should cost 100 - One Truck Item
 // 4. One Parcel item, should cost 25 - One Parcel Item
 
-func Test_TruckItemShouldCost100(t *testing.T) {
+func Test_ItemShouldCost100(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
-	item := itempricecalculator.Item{}
+	item := []itempricecalculator.Item{
+		{},
+	}
 
 	//ACT
 	price := itemPriceCalculator.CalculatePrice(item)
 
 	//ASSERT
 	assert.Equal(t, 100.0, price)
+}
+
+func Test_TwoItemsShouldCost200(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{
+		{},
+		{},
+	}
+	//ACT
+	price := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 200.0, price)
 }
