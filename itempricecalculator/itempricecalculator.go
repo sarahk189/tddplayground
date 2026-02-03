@@ -1,50 +1,19 @@
 package itempricecalculator
 
-type Item struct {
-	ID       string
-	Type     string
-	Quantity int
-}
-
-//type WeightService struct {
-//}
+// Implement an item price calculator that computes the total price of a list of items based on their type and quantity.
+//TRUCK items costs 100.0 each and PARCEL items costs 25.0 each.
 //
-//func (w *WeightService) GetWeight(itemID string) float64 {
-//	return 0.0
-//}
+//If TRUCK items weigh more than 100kg, they cost an additional 50.0 per piece.
+//If PARCEL items weigh more than 10kg, they cost an additional 25.0 per piece.
+//
+//Items without weight information should be assumed to be outside the weight limit.
+//
+//Non-existing item types should return an error.
 
-//func NewWeightService() *WeightService {
-//	return &WeightService{}
-//}
+func NewItemPriceCalculator() {
 
-type ItemWeightProvider interface {
-	GetWeight(itemID string) float64
 }
 
-type ItemPriceCalculator struct {
-	service ItemWeightProvider
-}
+func CalculatePrice() {
 
-func NewItemPriceCalculator(service ItemWeightProvider) *ItemPriceCalculator {
-	return &ItemPriceCalculator{
-		service: service,
-	}
-}
-
-func (i *ItemPriceCalculator) CalculatePrice(items []Item) (float64, error) {
-	totalPrice := 0.0
-
-	for _, item := range items {
-		weight := i.service.GetWeight(item.ID)
-		//if item.Type == "TRUCK" {
-		totalPrice += 100.0
-		if weight > 100.0 {
-			totalPrice += 50.0
-		}
-		//} else if item.Type == "PARCEL" {
-		//	totalPrice += 25.0
-		//}
-	}
-
-	return totalPrice, nil
 }
