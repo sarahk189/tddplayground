@@ -14,6 +14,7 @@ import "fmt"
 type Item struct {
 	Type     string
 	Quantity int
+	Weight   int
 }
 
 type ItemPriceCalculator struct {

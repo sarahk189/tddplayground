@@ -1,7 +1,6 @@
 package itempricecalculator_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/sarahk189/tddplayground/itempricecalculator"
@@ -174,10 +173,47 @@ func Test_ItemMissingTypeShouldReturnError(t *testing.T) {
 	}
 
 	//ACT
-	price, err := itemPriceCalculator.CalculatePrice(items)
-
-	fmt.Println(price)
+	_, err := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
 	assert.EqualError(t, err, "property type is missing on item")
+}
+
+func Test_ItemWithWrongTypeShouldReturnAnError(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{
+		{
+			Type:     "Duck",
+			Quantity: 1,
+		},
+	}
+	//ACT
+	_, err := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.EqualError(t, err, "property type is missing on item")
+}
+
+func Test_TruckItemsWeighMoreThan100kg(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{
+		{
+			Type:     "TRUCK",
+			Quantity: 1,
+			Weight:   105,
+		},
+	}
+
+	//ACT
+	price, err := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 150.0, *price)
+	assert.NoError(t, error(nil), err)
 }
