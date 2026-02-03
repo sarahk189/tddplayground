@@ -25,9 +25,9 @@ func (i *ItemPriceCalculator) CalculatePrice(items []Item) float64 {
 	price := 0.0
 	for _, item := range items {
 		if item.Type == "PARCEL" {
-			price += 25.0
+			price += 25.0 * float64(item.Quantity)
 		} else {
-			price += 100.0
+			price += 100.0 * float64(item.Quantity)
 		}
 	}
 	return price
