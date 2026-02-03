@@ -100,3 +100,22 @@ func Test_ThreeTruckItemsShouldCost300(t *testing.T) {
 	//ASSERT
 	assert.Equal(t, 300.0, price)
 }
+
+func Test_OneParcelItemShouldCost25(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{
+		{
+			Type:     "PARCEL",
+			Quantity: 1,
+		},
+	}
+
+	//ACT
+	price := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 25.0, price)
+}
