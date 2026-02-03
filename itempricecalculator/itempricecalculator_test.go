@@ -43,7 +43,7 @@ func Test_TruckItemShouldCost100(t *testing.T) {
 	price, err := itemPriceCalculator.CalculatePrice(item)
 
 	//ASSERT
-	assert.Equal(t, 100.0, price)
+	assert.Equal(t, 100.0, *price)
 	assert.NoError(t, error(nil), err)
 }
 
@@ -66,7 +66,7 @@ func Test_TwoTruckItemsShouldCost200(t *testing.T) {
 	price, err := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
-	assert.Equal(t, 200.0, price)
+	assert.Equal(t, 200.0, *price)
 	assert.NoError(t, error(nil), err)
 }
 
@@ -93,7 +93,7 @@ func Test_ThreeTruckItemsShouldCost300(t *testing.T) {
 	price, err := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
-	assert.Equal(t, 300.0, price)
+	assert.Equal(t, 300.0, *price)
 	assert.NoError(t, error(nil), err)
 }
 
@@ -113,7 +113,7 @@ func Test_OneParcelItemShouldCost25(t *testing.T) {
 	price, err := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
-	assert.Equal(t, 25.0, price)
+	assert.Equal(t, 25.0, *price)
 	assert.NoError(t, error(nil), err)
 }
 
@@ -133,7 +133,7 @@ func Test_OneParcelItemWithQuantity2ShouldCost50(t *testing.T) {
 	price, err := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
-	assert.Equal(t, 50.0, price)
+	assert.Equal(t, 50.0, *price)
 	assert.NoError(t, error(nil), err)
 }
 
@@ -157,7 +157,7 @@ func Test_OneTruckAndTwoParcelsItemsShouldCost150(t *testing.T) {
 	price, err := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
-	assert.Equal(t, 150.0, price)
+	assert.Equal(t, 150.0, *price)
 	assert.NoError(t, err)
 }
 
@@ -179,5 +179,5 @@ func Test_ItemMissingTypeShouldReturnError(t *testing.T) {
 	fmt.Println(price)
 
 	//ASSERT
-	assert.EqualError(t, err, "Property type is missing on item")
+	assert.EqualError(t, err, "property type is missing on item")
 }

@@ -1,5 +1,7 @@
 package itempricecalculator
 
+import "fmt"
+
 // Implement an item price calculator that computes the total price of a list of items based on their type and quantity.
 // TRUCK items costs 100.0 each and PARCEL items costs 25.0 each.
 //
@@ -21,14 +23,19 @@ func NewItemPriceCalculator() *ItemPriceCalculator {
 	return &ItemPriceCalculator{}
 }
 
-func (i *ItemPriceCalculator) CalculatePrice(items []Item) (float64, error) {
+func (i *ItemPriceCalculator) CalculatePrice(items []Item) (*float64, error) {
 	price := 0.0
 	for _, item := range items {
-		if item.Type == "PARCEL" {
+		itemType := item.Type
+
+		switch itemType {
+		case "PARCEL":
 			price += 25.0 * float64(item.Quantity)
-		} else {
+		case "TRUCK":
 			price += 100.0 * float64(item.Quantity)
+		default:
+			return nil, fmt.Errorf("property type is missing on item")
 		}
 	}
-	return price, nil
+	return &price, nil
 }
