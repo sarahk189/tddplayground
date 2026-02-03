@@ -17,10 +17,10 @@ type Item struct {
 type ItemPriceCalculator struct {
 }
 
-func NewItemPriceCalculator() {
-
+func NewItemPriceCalculator() *ItemPriceCalculator {
+	return &ItemPriceCalculator{}
 }
 
-func (i *ItemPriceCalculator) CalculatePrice() float64 {
+func (i *ItemPriceCalculator) CalculatePrice(item Item) float64 {
 	return 100.0
 }

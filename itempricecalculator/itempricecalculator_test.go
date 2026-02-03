@@ -19,14 +19,20 @@ Items without weight information should be assumed to be outside the weight limi
 Non-existing item types should return an error.
 */
 
+// 1. One arbitrary item should cost 100 - An item
+// 2. Two arbitrary items should cost 200 - List of items
+// 3. One Truck item, should cost 100 - One Truck Item
+// 4. One Parcel item, should cost 25 - One Parcel Item
+
 func Test_TruckItemShouldCost100(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	item := itempricecalculator.Item{}
 
 	//ACT
-	price := itemPriceCalculator.CalculatePrice()
+	price := itemPriceCalculator.CalculatePrice(item)
 
 	//ASSERT
 	assert.Equal(t, 100.0, price)
