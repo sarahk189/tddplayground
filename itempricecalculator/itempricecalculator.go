@@ -22,8 +22,9 @@ func NewItemPriceCalculator() *ItemPriceCalculator {
 }
 
 func (i *ItemPriceCalculator) CalculatePrice(items []Item) float64 {
-	if len(items) == 1 {
-		return 100.0
+	price := 0.0
+	for _, _ = range items {
+		price += 100.00
 	}
-	return 200.0
+	return price
 }
