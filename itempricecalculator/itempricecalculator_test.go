@@ -1,6 +1,7 @@
 package itempricecalculator_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/sarahk189/tddplayground/itempricecalculator"
@@ -39,10 +40,11 @@ func Test_TruckItemShouldCost100(t *testing.T) {
 	}
 
 	//ACT
-	price := itemPriceCalculator.CalculatePrice(item)
+	price, err := itemPriceCalculator.CalculatePrice(item)
 
 	//ASSERT
 	assert.Equal(t, 100.0, price)
+	assert.NoError(t, error(nil), err)
 }
 
 func Test_TwoTruckItemsShouldCost200(t *testing.T) {
@@ -61,29 +63,11 @@ func Test_TwoTruckItemsShouldCost200(t *testing.T) {
 		},
 	}
 	//ACT
-	price := itemPriceCalculator.CalculatePrice(items)
+	price, err := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
 	assert.Equal(t, 200.0, price)
-}
-
-func Test_OneTruckItemShouldCost100(t *testing.T) {
-	t.Parallel()
-
-	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
-	items := []itempricecalculator.Item{
-		{
-			Type:     "TRUCK",
-			Quantity: 1,
-		},
-	}
-
-	//ACT
-	price := itemPriceCalculator.CalculatePrice(items)
-
-	//ASSERT
-	assert.Equal(t, 100.0, price)
+	assert.NoError(t, error(nil), err)
 }
 
 func Test_ThreeTruckItemsShouldCost300(t *testing.T) {
@@ -106,10 +90,11 @@ func Test_ThreeTruckItemsShouldCost300(t *testing.T) {
 	}
 
 	//ACT
-	price := itemPriceCalculator.CalculatePrice(items)
+	price, err := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
 	assert.Equal(t, 300.0, price)
+	assert.NoError(t, error(nil), err)
 }
 
 func Test_OneParcelItemShouldCost25(t *testing.T) {
@@ -125,10 +110,11 @@ func Test_OneParcelItemShouldCost25(t *testing.T) {
 	}
 
 	//ACT
-	price := itemPriceCalculator.CalculatePrice(items)
+	price, err := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
 	assert.Equal(t, 25.0, price)
+	assert.NoError(t, error(nil), err)
 }
 
 func Test_OneParcelItemWithQuantity2ShouldCost50(t *testing.T) {
@@ -144,8 +130,54 @@ func Test_OneParcelItemWithQuantity2ShouldCost50(t *testing.T) {
 	}
 
 	//ACT
-	price := itemPriceCalculator.CalculatePrice(items)
+	price, err := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
 	assert.Equal(t, 50.0, price)
+	assert.NoError(t, error(nil), err)
+}
+
+func Test_OneTruckAndTwoParcelsItemsShouldCost150(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{
+		{
+			Type:     "TRUCK",
+			Quantity: 1,
+		},
+		{
+			Type:     "PARCEL",
+			Quantity: 2,
+		},
+	}
+
+	//ACT
+	price, err := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 150.0, price)
+	assert.NoError(t, err)
+}
+
+func Test_ItemMissingTypeShouldReturnError(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{
+		{
+			Type:     "",
+			Quantity: 1,
+		},
+	}
+
+	//ACT
+	price, err := itemPriceCalculator.CalculatePrice(items)
+
+	fmt.Println(price)
+
+	//ASSERT
+	assert.EqualError(t, err, "Property type is missing on item")
 }
