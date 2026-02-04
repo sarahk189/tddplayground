@@ -114,8 +114,7 @@ func Test_CalculatePriceForParcelItems(t *testing.T) {
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
 	item := []itempricecalculator.Item{
 		{
-			Type:     "PARCEL",
-			Quantity: 1,
+			Type: "PARCEL",
 		},
 	}
 
@@ -124,4 +123,25 @@ func Test_CalculatePriceForParcelItems(t *testing.T) {
 
 	//ASSERT
 	assert.Equal(t, 25.0, price)
+}
+
+func Test_CalculatePriceForTwoParcelItems(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	item := []itempricecalculator.Item{
+		{
+			Type: "PARCEL",
+		},
+		{
+			Type: "PARCEL",
+		},
+	}
+
+	//ACT
+	price := itemPriceCalculator.CalculatePrice(item)
+
+	//ASSERT
+	assert.Equal(t, 50.0, price)
 }
