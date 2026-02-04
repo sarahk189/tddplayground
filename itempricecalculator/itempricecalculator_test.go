@@ -1,6 +1,7 @@
 package itempricecalculator_test
 
 import (
+	"math/rand"
 	"testing"
 
 	"github.com/sarahk189/tddplayground/itempricecalculator"
@@ -40,7 +41,7 @@ Non-existing item types should return an error.
 // 5. One Parcel item, should cost 25 - One Parcel Item
 // 6. Quantity of items should be considered in the price calculation - One Parcel Item with quantity 2
 
-func Test_CalculatePriceShouldReturn100ForOneItem(t *testing.T) {
+func Test_CalculatePriceForItemsBasedOnNumberOfItems(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
@@ -50,7 +51,7 @@ func Test_CalculatePriceShouldReturn100ForOneItem(t *testing.T) {
 		items         []itempricecalculator.Item
 		expectedPrice float64
 	}{
-		"One arbitrary item": {
+		"One item": {
 			items: []itempricecalculator.Item{
 				{},
 			},
@@ -85,4 +86,23 @@ func Test_CalculatePriceShouldReturn100ForOneItem(t *testing.T) {
 		})
 
 	}
+}
+
+func Test_CalculatePriceForRandomNumberOfItems(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{}
+
+	numberOfItems := rand.Intn(20)
+	for i := 0; i < numberOfItems; i++ {
+		items = append(items, itempricecalculator.Item{})
+	}
+
+	//ACT
+	price := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, float64(numberOfItems*100), price)
 }
