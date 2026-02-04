@@ -106,3 +106,22 @@ func Test_CalculatePriceForRandomNumberOfItems(t *testing.T) {
 	//ASSERT
 	assert.Equal(t, float64(numberOfItems*100), price)
 }
+
+func Test_CalculatePriceForParcelItems(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	item := []itempricecalculator.Item{
+		{
+			Type:     "PARCEL",
+			Quantity: 1,
+		},
+	}
+
+	//ACT
+	price := itemPriceCalculator.CalculatePrice(item)
+
+	//ASSERT
+	assert.Equal(t, 25.0, price)
+}
