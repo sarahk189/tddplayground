@@ -40,14 +40,14 @@ Non-existing item types should return an error.
 // 5. One Parcel item, should cost 25 - One Parcel Item
 // 6. Quantity of items should be considered in the price calculation - One Parcel Item with quantity 2
 
-func Test_CalculatePriceShouldReturn100(t *testing.T) {
+func Test_CalculatePriceShouldReturn100ForOneItem(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
-
+	items := []itempricecalculator.Item{}
 	//ACT
-	price := itemPriceCalculator.CalculatePrice()
+	price := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
 	assert.Equal(t, 100.0, price)

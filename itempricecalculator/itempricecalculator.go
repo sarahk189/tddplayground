@@ -24,6 +24,6 @@ func NewItemPriceCalculator() ItemPriceCalculator {
 	return ItemPriceCalculator{}
 }
 
-func (i *ItemPriceCalculator) CalculatePrice() float64 {
-	return 100.0
+func (i *ItemPriceCalculator) CalculatePrice(items []Item) float64 {
+	return 0.0
 }
