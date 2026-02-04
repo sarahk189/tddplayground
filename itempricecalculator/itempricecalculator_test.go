@@ -45,47 +45,44 @@ func Test_CalculatePriceShouldReturn100ForOneItem(t *testing.T) {
 
 	//ARRANGE
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
-	items := []itempricecalculator.Item{
-		{},
-	}
-	//ACT
-	price := itemPriceCalculator.CalculatePrice(items)
 
-	//ASSERT
-	assert.Equal(t, 100.0, price)
-}
+	testCases := map[string]struct {
+		items         []itempricecalculator.Item
+		expectedPrice float64
+	}{
+		"One arbitrary item": {
+			items: []itempricecalculator.Item{
+				{},
+			},
+			expectedPrice: 100.0,
+		},
 
-func Test_CalculatePriceShouldReturn200ForTwoItems(t *testing.T) {
-	t.Parallel()
-
-	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
-	items := []itempricecalculator.Item{
-		{},
-		{},
-	}
-
-	//ACT
-	price := itemPriceCalculator.CalculatePrice(items)
-
-	//ASSERT
-	assert.Equal(t, 200.0, price)
-}
-
-func Test_CalculatePriceShouldReturn300ForThreeItems(t *testing.T) {
-	t.Parallel()
-
-	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
-	items := []itempricecalculator.Item{
-		{},
-		{},
-		{},
+		"Two items": {
+			items: []itempricecalculator.Item{
+				{},
+				{},
+			},
+			expectedPrice: 200.0,
+		},
+		"Three items": {
+			items: []itempricecalculator.Item{
+				{},
+				{},
+				{},
+			},
+			expectedPrice: 300.0,
+		},
 	}
 
 	//ACT
-	price := itemPriceCalculator.CalculatePrice(items)
+	for testName, testCases := range testCases {
+		t.Run(testName, func(t *testing.T) {
+			t.Parallel()
+			price := itemPriceCalculator.CalculatePrice(testCases.items)
 
-	//ASSERT
-	assert.Equal(t, 300.0, price)
+			//ASSERT
+			assert.Equal(t, testCases.expectedPrice, price)
+		})
+
+	}
 }
