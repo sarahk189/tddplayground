@@ -45,10 +45,29 @@ func Test_CalculatePriceShouldReturn100ForOneItem(t *testing.T) {
 
 	//ARRANGE
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
-	items := []itempricecalculator.Item{}
+	items := []itempricecalculator.Item{
+		{},
+	}
 	//ACT
 	price := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
 	assert.Equal(t, 100.0, price)
+}
+
+func Test_CalculatePriceShouldReturn200ForTwoItems(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{
+		{},
+		{},
+	}
+
+	//ACT
+	price := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 200.0, price)
 }
