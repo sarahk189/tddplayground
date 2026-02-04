@@ -41,7 +41,7 @@ Non-existing item types should return an error.
 // 5. One Parcel item, should cost 25 - One Parcel Item
 // 6. Quantity of items should be considered in the price calculation - One Parcel Item with quantity 2
 
-func Test_CalculatePriceForItemsBasedOnNumberOfItems(t *testing.T) {
+func Test_CalculatePriceForTruckItemsBasedOnNumberOfItems(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
@@ -53,23 +53,35 @@ func Test_CalculatePriceForItemsBasedOnNumberOfItems(t *testing.T) {
 	}{
 		"One item": {
 			items: []itempricecalculator.Item{
-				{},
+				{
+					Type: "TRUCK",
+				},
 			},
 			expectedPrice: 100.0,
 		},
 
 		"Two items": {
 			items: []itempricecalculator.Item{
-				{},
-				{},
+				{
+					Type: "TRUCK",
+				},
+				{
+					Type: "TRUCK",
+				},
 			},
 			expectedPrice: 200.0,
 		},
 		"Three items": {
 			items: []itempricecalculator.Item{
-				{},
-				{},
-				{},
+				{
+					Type: "TRUCK",
+				},
+				{
+					Type: "TRUCK",
+				},
+				{
+					Type: "TRUCK",
+				},
 			},
 			expectedPrice: 300.0,
 		},
@@ -88,7 +100,7 @@ func Test_CalculatePriceForItemsBasedOnNumberOfItems(t *testing.T) {
 	}
 }
 
-func Test_CalculatePriceForRandomNumberOfItems(t *testing.T) {
+func Test_CalculatePriceForRandomNumberOfTruckItems(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
@@ -97,7 +109,9 @@ func Test_CalculatePriceForRandomNumberOfItems(t *testing.T) {
 
 	numberOfItems := rand.Intn(20)
 	for i := 0; i < numberOfItems; i++ {
-		items = append(items, itempricecalculator.Item{})
+		items = append(items, itempricecalculator.Item{
+			Type: "TRUCK",
+		})
 	}
 
 	//ACT
@@ -107,7 +121,7 @@ func Test_CalculatePriceForRandomNumberOfItems(t *testing.T) {
 	assert.Equal(t, float64(numberOfItems*100), price)
 }
 
-func Test_CalculatePriceForParcelItems(t *testing.T) {
+func Test_CalculatePriceForOneParcelItem(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
