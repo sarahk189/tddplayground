@@ -1,5 +1,12 @@
 package itempricecalculator_test
 
+import (
+	"testing"
+
+	"github.com/sarahk189/tddplayground/itempricecalculator"
+	"github.com/stretchr/testify/assert"
+)
+
 /*
 Implement an item price calculator that computes the total price of a list of items based on their type and quantity.
 TRUCK items costs 100.0 each and PARCEL items costs 25.0 each.
@@ -32,3 +39,16 @@ Non-existing item types should return an error.
 // 4. Three Truck items, should cost 300 - Three Truck Items
 // 5. One Parcel item, should cost 25 - One Parcel Item
 // 6. Quantity of items should be considered in the price calculation - One Parcel Item with quantity 2
+
+func Test_CalculatePriceShouldReturn100(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+
+	//ACT
+	price := itemPriceCalculator.CalculatePrice()
+
+	//ASSERT
+	assert.Equal(t, 100.0, price)
+}

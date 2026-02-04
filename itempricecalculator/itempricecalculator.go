@@ -1,10 +1,5 @@
 package itempricecalculator
 
-import (
-	"fmt"
-	"strings"
-)
-
 // Implement an item price calculator that computes the total price of a list of items based on their type and quantity.
 // TRUCK items costs 100.0 each and PARCEL items costs 25.0 each.
 //
@@ -21,17 +16,14 @@ type Item struct {
 }
 
 type ItemPriceCalculator struct {
-
 }
 
 //type WeightCalc struct{}
 
 func NewItemPriceCalculator() ItemPriceCalculator {
-
+	return ItemPriceCalculator{}
 }
 
-
-func () CalculatePrice() () {
-
-
+func (i *ItemPriceCalculator) CalculatePrice() float64 {
+	return 0.0
 }
