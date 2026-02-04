@@ -18,18 +18,20 @@ type Item struct {
 type ItemPriceCalculator struct {
 }
 
-//type WeightCalc struct{}
-
 func NewItemPriceCalculator() ItemPriceCalculator {
 	return ItemPriceCalculator{}
 }
 
 func (i *ItemPriceCalculator) CalculatePrice(items []Item) float64 {
-	if items[0].Type == "PARCEL" && len(items) == 1 {
-		return 25.0
+	price := 0.0
+
+	for _, item := range items {
+		if item.Type == "PARCEL" {
+			price += 25.0
+		} else {
+			price += 100.0
+		}
 	}
-	if items[0].Type == "PARCEL" && items[1].Type == "PARCEL" && len(items) == 2 {
-		return 50.0
-	}
-	return 100.0 * float64(len(items))
+
+	return price
 }
