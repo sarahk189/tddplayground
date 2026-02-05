@@ -181,3 +181,33 @@ func Test_CalculatePriceForRandomNumberOfParcels(t *testing.T) {
 	assert.Equal(t, float64(numberOfItems*25), price)
 
 }
+
+func Test_CalculatePriceForRandomAmountOfParcelAndTruckItems(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{}
+
+	numberOfTruckItems := rand.Intn(10)
+	for i := 0; i < numberOfTruckItems; i++ {
+		items = append(items, itempricecalculator.Item{
+			Type: "TRUCK",
+		})
+	}
+
+	numberOfParcelItems := rand.Intn(10)
+	for i := 0; i < numberOfParcelItems; i++ {
+		items = append(items, itempricecalculator.Item{
+			Type: "PARCEL",
+		})
+	}
+
+	expectedPrice := float64(numberOfTruckItems*100 + numberOfParcelItems*25)
+
+	//ACT
+	price := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, expectedPrice, price)
+}
