@@ -212,7 +212,7 @@ func Test_CalculatePriceForRandomAmountOfParcelAndTruckItems(t *testing.T) {
 	assert.Equal(t, expectedPrice, price)
 }
 
-func Test_CalculateTypoInItemType(t *testing.T) {
+func Test_CalculatePriceForTypoInItemType(t *testing.T) {
 	t.Parallel()
 
 	testCases := map[string]struct {

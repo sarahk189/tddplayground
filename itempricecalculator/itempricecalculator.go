@@ -1,5 +1,7 @@
 package itempricecalculator
 
+import "strings"
+
 // Implement an item price calculator that computes the total price of a list of items based on their type and quantity.
 // TRUCK items costs 100.0 each and PARCEL items costs 25.0 each.
 //
@@ -26,7 +28,9 @@ func (i *ItemPriceCalculator) CalculatePrice(items []Item) float64 {
 	price := 0.0
 
 	for _, item := range items {
-		if item.Type == "PARCEL" {
+		itemType := strings.ToUpper(item.Type)
+
+		if itemType == "PARCEL" {
 			price += 25.0
 		} else {
 			price += 100.0
