@@ -338,3 +338,67 @@ func Test_ShouldReturnErrorForInvalidItemTypes(t *testing.T) {
 		})
 	}
 }
+
+func Test_ItemIsAParcelOrTruckItem(t *testing.T) {
+	t.Parallel()
+
+	testCases := map[string]struct {
+		items         []itempricecalculator.Item
+		expectedPrice float64
+		expectedError error
+	}{
+		"Test item is a truck item": {
+			items: []itempricecalculator.Item{
+				{
+					Type: "TRUCK",
+				},
+			},
+			expectedPrice: 100.0,
+			expectedError: nil,
+		},
+
+		"Test item is a parcel item": {
+			items: []itempricecalculator.Item{
+				{
+					Type: "PARCEL",
+				},
+			},
+			expectedPrice: 25.0,
+			expectedError: nil,
+		},
+
+		"Test item is an invalid item type one": {
+			items: []itempricecalculator.Item{
+				{
+					Type: "BICYCLE",
+				},
+			},
+			expectedPrice: 0.0,
+			expectedError: errors.New("invalid item type: BICYCLE"),
+		},
+
+		"Test item is an invalid item type two": {
+			items: []itempricecalculator.Item{
+				{
+					Type: "RandomItemType",
+				},
+			},
+			expectedPrice: 0.0,
+			expectedError: errors.New("invalid item type: RandomItemType"),
+		},
+	}
+
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+
+	for testName, testCase := range testCases {
+		t.Run(testName, func(t *testing.T) {
+			t.Parallel()
+
+			price, err := itemPriceCalculator.CalculatePrice(testCase.items)
+
+			assert.Equal(t, testCase.expectedPrice, price)
+			assert.Equal(t, testCase.expectedError, err)
+
+		})
+	}
+}
