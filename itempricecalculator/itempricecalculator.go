@@ -33,14 +33,12 @@ func (i *ItemPriceCalculator) CalculatePrice(items []Item) (float64, error) {
 	for _, item := range items {
 		itemType := strings.ToUpper(item.Type)
 
-		if itemType == "DUCK" || itemType == "GOOSE" {
-			return 0.0, fmt.Errorf("invalid item type: %s", item.Type)
-		}
-
 		if itemType == "PARCEL" {
 			price += 25.0
-		} else {
+		} else if itemType == "TRUCK" {
 			price += 100.0
+		} else {
+			return 0.0, fmt.Errorf("invalid item type: %s", item.Type)
 		}
 	}
 
