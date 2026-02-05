@@ -1,6 +1,7 @@
 package itempricecalculator_test
 
 import (
+	"errors"
 	"math/rand"
 	"testing"
 
@@ -91,7 +92,7 @@ func Test_CalculatePriceForTruckItemsBasedOnNumberOfItems(t *testing.T) {
 	for testName, testCases := range testCases {
 		t.Run(testName, func(t *testing.T) {
 			t.Parallel()
-			price := itemPriceCalculator.CalculatePrice(testCases.items)
+			price, _ := itemPriceCalculator.CalculatePrice(testCases.items)
 
 			//ASSERT
 			assert.Equal(t, testCases.expectedPrice, price)
@@ -115,7 +116,7 @@ func Test_CalculatePriceForRandomNumberOfTruckItems(t *testing.T) {
 	}
 
 	//ACT
-	price := itemPriceCalculator.CalculatePrice(items)
+	price, _ := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
 	assert.Equal(t, float64(numberOfItems*100), price)
@@ -133,7 +134,7 @@ func Test_CalculatePriceForOneParcelItem(t *testing.T) {
 	}
 
 	//ACT
-	price := itemPriceCalculator.CalculatePrice(item)
+	price, _ := itemPriceCalculator.CalculatePrice(item)
 
 	//ASSERT
 	assert.Equal(t, 25.0, price)
@@ -154,7 +155,7 @@ func Test_CalculatePriceForTwoParcelItems(t *testing.T) {
 	}
 
 	//ACT
-	price := itemPriceCalculator.CalculatePrice(item)
+	price, _ := itemPriceCalculator.CalculatePrice(item)
 
 	//ASSERT
 	assert.Equal(t, 50.0, price)
@@ -175,7 +176,7 @@ func Test_CalculatePriceForRandomNumberOfParcels(t *testing.T) {
 	}
 
 	//ACT
-	price := itemPriceCalculator.CalculatePrice(items)
+	price, _ := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
 	assert.Equal(t, float64(numberOfItems*25), price)
@@ -206,7 +207,7 @@ func Test_CalculatePriceForRandomAmountOfParcelAndTruckItems(t *testing.T) {
 	expectedPrice := float64(numberOfTruckItems*100 + numberOfParcelItems*25)
 
 	//ACT
-	price := itemPriceCalculator.CalculatePrice(items)
+	price, _ := itemPriceCalculator.CalculatePrice(items)
 
 	//ASSERT
 	assert.Equal(t, expectedPrice, price)
@@ -268,9 +269,72 @@ func Test_CalculatePriceForTypoInItemType(t *testing.T) {
 		t.Run(testName, func(t *testing.T) {
 			t.Parallel()
 
-			price := itemPriceCalculator.CalculatePrice(testCase.items)
+			price, _ := itemPriceCalculator.CalculatePrice(testCase.items)
 
 			assert.Equal(t, testCase.expectedPrice, price)
+		})
+	}
+}
+
+func Test_ShouldReturnErrorForInvalidItemTypes(t *testing.T) {
+	t.Parallel()
+
+	testCases := map[string]struct {
+		items         []itempricecalculator.Item
+		expectedError error
+	}{
+		"Test first item is invalid item type": {
+			items: []itempricecalculator.Item{
+				{
+					"",
+					"DUCK",
+					0,
+				},
+				{
+					"",
+					"TRUCK",
+					0,
+				},
+				{
+					"",
+					"PARCEL",
+					0,
+				},
+			},
+			expectedError: errors.New("invalid item type: DUCK"),
+		},
+
+		"Test second item is invalid item type": {
+			items: []itempricecalculator.Item{
+				{
+					"",
+					"PARCEL",
+					0,
+				},
+				{
+					"",
+					"GOOSE",
+					0,
+				},
+				{
+					"",
+					"TRUCK",
+					0,
+				},
+			},
+			expectedError: errors.New("invalid item type: GOOSE"),
+		},
+	}
+
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+
+	for testName, testCase := range testCases {
+		t.Run(testName, func(t *testing.T) {
+			t.Parallel()
+
+			_, err := itemPriceCalculator.CalculatePrice(testCase.items)
+
+			assert.Equal(t, testCase.expectedError, err)
 		})
 	}
 }

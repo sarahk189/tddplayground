@@ -24,7 +24,7 @@ func NewItemPriceCalculator() ItemPriceCalculator {
 	return ItemPriceCalculator{}
 }
 
-func (i *ItemPriceCalculator) CalculatePrice(items []Item) float64 {
+func (i *ItemPriceCalculator) CalculatePrice(items []Item) (float64, error) {
 	price := 0.0
 
 	for _, item := range items {
@@ -37,5 +37,5 @@ func (i *ItemPriceCalculator) CalculatePrice(items []Item) float64 {
 		}
 	}
 
-	return price
+	return price, nil
 }
