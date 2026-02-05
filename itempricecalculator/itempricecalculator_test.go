@@ -211,3 +211,66 @@ func Test_CalculatePriceForRandomAmountOfParcelAndTruckItems(t *testing.T) {
 	//ASSERT
 	assert.Equal(t, expectedPrice, price)
 }
+
+func Test_CalculateTypoInItemType(t *testing.T) {
+	t.Parallel()
+
+	testCases := map[string]struct {
+		items         []itempricecalculator.Item
+		expectedPrice float64
+	}{
+		"Test mixed casing Truck": {
+			items: []itempricecalculator.Item{
+				{
+					"",
+					"trUCK",
+					0,
+				},
+				{
+					"",
+					"TRuCK",
+					0,
+				},
+				{
+					"",
+					"Truck",
+					0,
+				},
+			},
+			expectedPrice: 300.0,
+		},
+
+		"Test mixed casing Parcel": {
+			items: []itempricecalculator.Item{
+				{
+					"",
+					"paRcel",
+					0,
+				},
+				{
+					"",
+					"Parcel",
+					0,
+				},
+				{
+					"",
+					"PARcel",
+					0,
+				},
+			},
+			expectedPrice: 75.0,
+		},
+	}
+
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+
+	for testName, testCase := range testCases {
+		t.Run(testName, func(t *testing.T) {
+			t.Parallel()
+
+			price := itemPriceCalculator.CalculatePrice(testCase.items)
+
+			assert.Equal(t, testCase.expectedPrice, price)
+		})
+	}
+}
