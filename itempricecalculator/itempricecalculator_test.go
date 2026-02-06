@@ -55,7 +55,9 @@ func Test_CalculatePriceForTruckItemsBasedOnNumberOfItems(t *testing.T) {
 		"One item": {
 			items: []itempricecalculator.Item{
 				{
-					Type: "TRUCK",
+					ID:       "ART1234",
+					Type:     "TRUCK",
+					Quantity: 1,
 				},
 			},
 			expectedPrice: 100.0,
@@ -64,10 +66,14 @@ func Test_CalculatePriceForTruckItemsBasedOnNumberOfItems(t *testing.T) {
 		"Two items": {
 			items: []itempricecalculator.Item{
 				{
-					Type: "TRUCK",
+					ID:       "ART1234",
+					Type:     "TRUCK",
+					Quantity: 1,
 				},
 				{
-					Type: "TRUCK",
+					ID:       "ART5678",
+					Type:     "TRUCK",
+					Quantity: 1,
 				},
 			},
 			expectedPrice: 200.0,
@@ -75,13 +81,19 @@ func Test_CalculatePriceForTruckItemsBasedOnNumberOfItems(t *testing.T) {
 		"Three items": {
 			items: []itempricecalculator.Item{
 				{
-					Type: "TRUCK",
+					ID:       "ART1234",
+					Type:     "TRUCK",
+					Quantity: 1,
 				},
 				{
-					Type: "TRUCK",
+					ID:       "ART5678",
+					Type:     "TRUCK",
+					Quantity: 1,
 				},
 				{
-					Type: "TRUCK",
+					ID:       "ART9012",
+					Type:     "TRUCK",
+					Quantity: 1,
 				},
 			},
 			expectedPrice: 300.0,
@@ -129,7 +141,9 @@ func Test_CalculatePriceForOneParcelItem(t *testing.T) {
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
 	item := []itempricecalculator.Item{
 		{
-			Type: "PARCEL",
+			ID:       "ART1234",
+			Type:     "PARCEL",
+			Quantity: 1,
 		},
 	}
 
@@ -147,10 +161,14 @@ func Test_CalculatePriceForTwoParcelItems(t *testing.T) {
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
 	item := []itempricecalculator.Item{
 		{
-			Type: "PARCEL",
+			ID:       "ART1234",
+			Type:     "PARCEL",
+			Quantity: 1,
 		},
 		{
-			Type: "PARCEL",
+			ID:       "ART5678",
+			Type:     "PARCEL",
+			Quantity: 1,
 		},
 	}
 
@@ -223,19 +241,19 @@ func Test_CalculatePriceForTypoInItemType(t *testing.T) {
 		"Test mixed casing Truck": {
 			items: []itempricecalculator.Item{
 				{
-					"",
-					"trUCK",
-					0,
+					ID:       "ART1234",
+					Type:     "trUCK",
+					Quantity: 1,
 				},
 				{
-					"",
-					"TRuCK",
-					0,
+					ID:       "ART5678",
+					Type:     "TRuCK",
+					Quantity: 1,
 				},
 				{
-					"",
-					"Truck",
-					0,
+					ID:       "ART9012",
+					Type:     "Truck",
+					Quantity: 1,
 				},
 			},
 			expectedPrice: 300.0,
@@ -244,19 +262,19 @@ func Test_CalculatePriceForTypoInItemType(t *testing.T) {
 		"Test mixed casing Parcel": {
 			items: []itempricecalculator.Item{
 				{
-					"",
-					"paRcel",
-					0,
+					ID:       "ART1234",
+					Type:     "paRcel",
+					Quantity: 1,
 				},
 				{
-					"",
-					"Parcel",
-					0,
+					ID:       "ART5678",
+					Type:     "Parcel",
+					Quantity: 1,
 				},
 				{
-					"",
-					"PARcel",
-					0,
+					ID:       "ART9012",
+					Type:     "PARcel",
+					Quantity: 1,
 				},
 			},
 			expectedPrice: 75.0,
@@ -286,19 +304,19 @@ func Test_ShouldReturnErrorForInvalidItemTypes(t *testing.T) {
 		"Test first item is invalid item type": {
 			items: []itempricecalculator.Item{
 				{
-					"",
-					"DUCK",
-					0,
+					ID:       "ART1234",
+					Type:     "DUCK",
+					Quantity: 1,
 				},
 				{
-					"",
-					"TRUCK",
-					0,
+					ID:       "ART5678",
+					Type:     "TRUCK",
+					Quantity: 1,
 				},
 				{
-					"",
-					"PARCEL",
-					0,
+					ID:       "ART9012",
+					Type:     "PARCEL",
+					Quantity: 1,
 				},
 			},
 			expectedError: errors.New("invalid item type: DUCK"),
@@ -307,19 +325,19 @@ func Test_ShouldReturnErrorForInvalidItemTypes(t *testing.T) {
 		"Test second item is invalid item type": {
 			items: []itempricecalculator.Item{
 				{
-					"",
-					"PARCEL",
-					0,
+					ID:       "ART1234",
+					Type:     "PARCEL",
+					Quantity: 1,
 				},
 				{
-					"",
-					"GOOSE",
-					0,
+					ID:       "ART5678",
+					Type:     "GOOSE",
+					Quantity: 1,
 				},
 				{
-					"",
-					"TRUCK",
-					0,
+					ID:       "",
+					Type:     "TRUCK",
+					Quantity: 1,
 				},
 			},
 			expectedError: errors.New("invalid item type: GOOSE"),
@@ -350,7 +368,9 @@ func Test_ItemIsAParcelOrTruckItem(t *testing.T) {
 		"Test item is a truck item": {
 			items: []itempricecalculator.Item{
 				{
-					Type: "TRUCK",
+					ID:       "ART1234",
+					Type:     "TRUCK",
+					Quantity: 1,
 				},
 			},
 			expectedPrice: 100.0,
@@ -360,7 +380,9 @@ func Test_ItemIsAParcelOrTruckItem(t *testing.T) {
 		"Test item is a parcel item": {
 			items: []itempricecalculator.Item{
 				{
-					Type: "PARCEL",
+					ID:       "ART1234",
+					Type:     "PARCEL",
+					Quantity: 1,
 				},
 			},
 			expectedPrice: 25.0,
@@ -370,7 +392,9 @@ func Test_ItemIsAParcelOrTruckItem(t *testing.T) {
 		"Test item is an invalid item type one": {
 			items: []itempricecalculator.Item{
 				{
-					Type: "BICYCLE",
+					ID:       "ART1232",
+					Type:     "BICYCLE",
+					Quantity: 1,
 				},
 			},
 			expectedPrice: 0.0,
@@ -380,7 +404,9 @@ func Test_ItemIsAParcelOrTruckItem(t *testing.T) {
 		"Test item is an invalid item type two": {
 			items: []itempricecalculator.Item{
 				{
-					Type: "RandomItemType",
+					ID:       "ART1234",
+					Type:     "RandomItemType",
+					Quantity: 1,
 				},
 			},
 			expectedPrice: 0.0,
@@ -401,4 +427,24 @@ func Test_ItemIsAParcelOrTruckItem(t *testing.T) {
 
 		})
 	}
+}
+
+func Test_CalculatePriceForItemsWithQuantityInformation(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{
+		{
+			ID:       "ART1234",
+			Type:     "TRUCK",
+			Quantity: 5,
+		},
+	}
+
+	//ACT
+	price, _ := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 500.0, price)
 }
