@@ -429,7 +429,7 @@ func Test_ItemIsAParcelOrTruckItem(t *testing.T) {
 	}
 }
 
-func Test_CalculatePriceForItemsWithQuantityInformation(t *testing.T) {
+func Test_CalculatePriceForItemsWithQuantityInformationForTruck(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
@@ -447,4 +447,24 @@ func Test_CalculatePriceForItemsWithQuantityInformation(t *testing.T) {
 
 	//ASSERT
 	assert.Equal(t, 500.0, price)
+}
+
+func Test_CalculatePriceForItemsWithQuantityInformationForParcel(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{
+		{
+			ID:       "ART1234",
+			Type:     "PARCEL",
+			Quantity: 5,
+		},
+	}
+
+	//ACT
+	price, _ := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 125.0, price)
 }
