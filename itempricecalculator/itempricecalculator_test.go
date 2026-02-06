@@ -497,3 +497,25 @@ func Test_CalculatePriceForItemsWithRandomQuantityInformationForParcelAndTruck(t
 	expectedPrice := float64(RandomTruckQuantity*100 + RandomParcelQuantity*25)
 	assert.Equal(t, expectedPrice, price)
 }
+
+func Test_ReturnAnErrorForItemsWithMissingQuantity(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{
+		{
+			ID:   "ART1234",
+			Type: "TRUCK",
+			// Quantity is missing
+		},
+	}
+
+	//ACT
+	price, err := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 0.0, price)
+	assert.Equal(t, errors.New("quantity information is missing for item ID: ART1234"), err)
+
+}
