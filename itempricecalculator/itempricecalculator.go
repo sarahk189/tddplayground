@@ -36,7 +36,7 @@ func (i *ItemPriceCalculator) CalculatePrice(items []Item) (float64, error) {
 		if itemType == "PARCEL" {
 			price += 25.0
 		} else if itemType == "TRUCK" {
-			price += 100.0
+			price += 100.0 * float64(item.Quantity)
 		} else {
 			return 0.0, fmt.Errorf("invalid item type: %s", item.Type)
 		}
