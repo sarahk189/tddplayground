@@ -55,7 +55,12 @@ func Test_CalculatePriceForTruckItemsBasedOnNumberOfItems(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 
 	testCases := map[string]struct {
 		items         []itempricecalculator.Item
@@ -126,7 +131,12 @@ func Test_CalculatePriceForRandomNumberOfTruckItems(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 	items := []itempricecalculator.Item{}
 
 	numberOfItems := rand.Intn(20)
@@ -148,7 +158,12 @@ func Test_CalculatePriceForOneParcelItem(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 	item := []itempricecalculator.Item{
 		{
 			ID:       "ART1234",
@@ -168,7 +183,12 @@ func Test_CalculatePriceForTwoParcelItems(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 	item := []itempricecalculator.Item{
 		{
 			ID:       "ART1234",
@@ -193,7 +213,12 @@ func Test_CalculatePriceForRandomNumberOfParcels(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 	items := []itempricecalculator.Item{}
 
 	numberOfItems := rand.Intn(20) + 1
@@ -216,7 +241,12 @@ func Test_CalculatePriceForRandomAmountOfParcelAndTruckItems(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 	items := []itempricecalculator.Item{}
 
 	numberOfTruckItems := rand.Intn(10) + 1
@@ -294,7 +324,12 @@ func Test_CalculatePriceForTypoInItemType(t *testing.T) {
 		},
 	}
 
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 
 	for testName, testCase := range testCases {
 		t.Run(testName, func(t *testing.T) {
@@ -357,7 +392,12 @@ func Test_ShouldReturnErrorForInvalidItemTypes(t *testing.T) {
 		},
 	}
 
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 
 	for testName, testCase := range testCases {
 		t.Run(testName, func(t *testing.T) {
@@ -427,7 +467,12 @@ func Test_ItemIsAParcelOrTruckItem(t *testing.T) {
 		},
 	}
 
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 
 	for testName, testCase := range testCases {
 		t.Run(testName, func(t *testing.T) {
@@ -446,7 +491,12 @@ func Test_CalculatePriceForItemsWithQuantityInformationForTruck(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 	items := []itempricecalculator.Item{
 		{
 			ID:       "ART1234",
@@ -466,7 +516,12 @@ func Test_CalculatePriceForItemsWithQuantityInformationForParcel(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 	items := []itempricecalculator.Item{
 		{
 			ID:       "ART1234",
@@ -486,7 +541,12 @@ func Test_CalculatePriceForItemsWithRandomQuantityInformationForParcelAndTruck(t
 	t.Parallel()
 
 	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 	RandomTruckQuantity := rand.Intn(10) + 1
 	RandomParcelQuantity := rand.Intn(10) + 1
 
@@ -515,7 +575,12 @@ func Test_ReturnAnErrorForItemsWithMissingQuantity(t *testing.T) {
 	t.Parallel()
 
 	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 	items := []itempricecalculator.Item{
 		{
 			ID:   "ART1234",
@@ -537,13 +602,12 @@ func Test_CalculateAnAdditional50ForTruckItemsThatWeighMoreThan100Kg(t *testing.
 	t.Parallel()
 
 	//ARRANGE
-
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
 			"ART5555": 175.0,
 		},
 	}
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(weightProvider)
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
 
 	items := []itempricecalculator.Item{
 		{
@@ -558,5 +622,31 @@ func Test_CalculateAnAdditional50ForTruckItemsThatWeighMoreThan100Kg(t *testing.
 
 	//ASSERT
 	assert.Equal(t, 150.0, price)
+	assert.Nil(t, err)
+}
+
+func Test_CalculateAnAdditional25ForParcelItemsThatWeighMoreThan10Kg(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART1456": 15.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
+	items := []itempricecalculator.Item{
+		{
+			ID:       "ART1456",
+			Type:     "PARCEL",
+			Quantity: 1,
+		},
+	}
+
+	//ACT
+	price, err := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 50.0, price)
 	assert.Nil(t, err)
 }

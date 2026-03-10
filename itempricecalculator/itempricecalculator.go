@@ -20,11 +20,18 @@ type Item struct {
 	Quantity int
 }
 
-type ItemPriceCalculator struct {
+type WeightProvider interface {
+	GetWeight(itemID string) float64
 }
 
-func NewItemPriceCalculator() ItemPriceCalculator {
-	return ItemPriceCalculator{}
+type ItemPriceCalculator struct {
+	weightProvider WeightProvider
+}
+
+func NewItemPriceCalculator(provider WeightProvider) ItemPriceCalculator {
+	return ItemPriceCalculator{
+		weightProvider: provider,
+	}
 }
 
 func (i *ItemPriceCalculator) CalculatePrice(items []Item) (float64, error) {
@@ -36,11 +43,15 @@ func (i *ItemPriceCalculator) CalculatePrice(items []Item) (float64, error) {
 		}
 
 		itemType := strings.ToUpper(item.Type)
+		itemWeight := i.weightProvider.GetWeight(item.ID)
 
 		if itemType == "PARCEL" {
 			price += 25.0 * float64(item.Quantity)
 		} else if itemType == "TRUCK" {
 			price += 100.0 * float64(item.Quantity)
+			if itemWeight > 100.0 {
+				price += 50.0 * float64(item.Quantity)
+			}
 		} else {
 			return 0.0, fmt.Errorf("invalid item type: %s", item.Type)
 		}
