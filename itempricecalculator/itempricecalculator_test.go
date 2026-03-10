@@ -523,3 +523,24 @@ func Test_ReturnAnErrorForItemsWithMissingQuantity(t *testing.T) {
 	assert.Equal(t, errors.New("quantity information is missing for item ID: ART1234"), err)
 
 }
+
+func Test_CalculateAnAdditional50ForTruckItemsThatWeighMoreThan100Kg(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+	items := []itempricecalculator.Item{
+		{
+			ID:       "ART5555",
+			Type:     "TRUCK",
+			Quantity: 1,
+		},
+	}
+
+	//ACT
+	price, err := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 150.0, price)
+	assert.Nil(t, err)
+}
