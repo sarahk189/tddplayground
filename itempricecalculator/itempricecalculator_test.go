@@ -42,6 +42,15 @@ Non-existing item types should return an error.
 // 5. One Parcel item, should cost 25 - One Parcel Item
 // 6. Quantity of items should be considered in the price calculation - One Parcel Item with quantity 2
 
+type mockWeightProvider struct {
+	itemWeight map[string]float64
+}
+
+func (m *mockWeightProvider) GetWeight(itemID string) float64 {
+
+	return m.itemWeight[itemID]
+}
+
 func Test_CalculatePriceForTruckItemsBasedOnNumberOfItems(t *testing.T) {
 	t.Parallel()
 
@@ -528,7 +537,14 @@ func Test_CalculateAnAdditional50ForTruckItemsThatWeighMoreThan100Kg(t *testing.
 	t.Parallel()
 
 	//ARRANGE
-	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
+
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(weightProvider)
+
 	items := []itempricecalculator.Item{
 		{
 			ID:       "ART5555",
