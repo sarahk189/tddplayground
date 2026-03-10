@@ -650,3 +650,35 @@ func Test_CalculateAnAdditional25ForParcelItemsThatWeighMoreThan10Kg(t *testing.
 	assert.Equal(t, 50.0, price)
 	assert.Nil(t, err)
 }
+
+func Test_CalculateAnAdditional25Amd50ForParcelAndTruckItemsThatWeighMoreThanTheLimit(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			"ART1456": 15.0,
+			"ART5555": 175.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
+	items := []itempricecalculator.Item{
+		{
+			ID:       "ART1456",
+			Type:     "PARCEL",
+			Quantity: 1,
+		},
+		{
+			ID:       "ART5555",
+			Type:     "TRUCK",
+			Quantity: 1,
+		},
+	}
+
+	//ACT
+	price, err := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 200.0, price)
+	assert.Nil(t, err)
+}
