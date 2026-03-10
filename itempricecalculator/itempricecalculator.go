@@ -31,6 +31,10 @@ func (i *ItemPriceCalculator) CalculatePrice(items []Item) (float64, error) {
 	price := 0.0
 
 	for _, item := range items {
+		if item.Quantity == 0 {
+			return 0.0, fmt.Errorf("quantity information is missing for item ID: %s", item.ID)
+		}
+
 		itemType := strings.ToUpper(item.Type)
 
 		if itemType == "PARCEL" {

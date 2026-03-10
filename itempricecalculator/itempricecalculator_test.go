@@ -123,7 +123,8 @@ func Test_CalculatePriceForRandomNumberOfTruckItems(t *testing.T) {
 	numberOfItems := rand.Intn(20)
 	for i := 0; i < numberOfItems; i++ {
 		items = append(items, itempricecalculator.Item{
-			Type: "TRUCK",
+			Type:     "TRUCK",
+			Quantity: 1,
 		})
 	}
 
@@ -186,10 +187,11 @@ func Test_CalculatePriceForRandomNumberOfParcels(t *testing.T) {
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
 	items := []itempricecalculator.Item{}
 
-	numberOfItems := rand.Intn(20)
+	numberOfItems := rand.Intn(20) + 1
 	for i := 0; i < numberOfItems; i++ {
 		items = append(items, itempricecalculator.Item{
-			Type: "PARCEL",
+			Type:     "PARCEL",
+			Quantity: 1,
 		})
 	}
 
@@ -208,17 +210,19 @@ func Test_CalculatePriceForRandomAmountOfParcelAndTruckItems(t *testing.T) {
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
 	items := []itempricecalculator.Item{}
 
-	numberOfTruckItems := rand.Intn(10)
+	numberOfTruckItems := rand.Intn(10) + 1
 	for i := 0; i < numberOfTruckItems; i++ {
 		items = append(items, itempricecalculator.Item{
-			Type: "TRUCK",
+			Type:     "TRUCK",
+			Quantity: 1,
 		})
 	}
 
 	numberOfParcelItems := rand.Intn(10)
 	for i := 0; i < numberOfParcelItems; i++ {
 		items = append(items, itempricecalculator.Item{
-			Type: "PARCEL",
+			Type:     "PARCEL",
+			Quantity: 1,
 		})
 	}
 
@@ -474,8 +478,8 @@ func Test_CalculatePriceForItemsWithRandomQuantityInformationForParcelAndTruck(t
 
 	//ARRANGE
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator()
-	RandomTruckQuantity := rand.Intn(10)
-	RandomParcelQuantity := rand.Intn(10)
+	RandomTruckQuantity := rand.Intn(10) + 1
+	RandomParcelQuantity := rand.Intn(10) + 1
 
 	items := []itempricecalculator.Item{
 		{
