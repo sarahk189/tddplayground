@@ -52,7 +52,7 @@ func (i *ItemPriceCalculator) CalculatePrice(items []Item) (float64, error) {
 			}
 		} else if itemType == "TRUCK" {
 			price += 100.0 * float64(item.Quantity)
-			if itemWeight > 100.0 {
+			if itemWeight > 100.0 || itemWeight == 0.0 {
 				price += 50.0 * float64(item.Quantity)
 			}
 		} else {
