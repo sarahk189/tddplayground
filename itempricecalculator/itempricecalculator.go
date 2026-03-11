@@ -45,17 +45,18 @@ func (i *ItemPriceCalculator) CalculatePrice(items []Item) (float64, error) {
 		itemType := strings.ToUpper(item.Type)
 		itemWeight := i.weightProvider.GetWeight(item.ID)
 
-		if itemType == "PARCEL" {
+		switch itemType {
+		case "PARCEL":
 			price += 25.0 * float64(item.Quantity)
 			if itemWeight > 10.0 || itemWeight == 0.0 {
 				price += 25.0 * float64(item.Quantity)
 			}
-		} else if itemType == "TRUCK" {
+		case "TRUCK":
 			price += 100.0 * float64(item.Quantity)
 			if itemWeight > 100.0 || itemWeight == 0.0 {
 				price += 50.0 * float64(item.Quantity)
 			}
-		} else {
+		default:
 			return 0.0, fmt.Errorf("invalid item type: %s", item.Type)
 		}
 	}

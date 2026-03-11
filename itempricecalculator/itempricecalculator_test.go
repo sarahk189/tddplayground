@@ -58,6 +58,9 @@ func Test_CalculatePriceForTruckItemsBasedOnNumberOfItems(t *testing.T) {
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
 			"ART5555": 175.0,
+			"ART1234": 50.00,
+			"ART5678": 50.00,
+			"ART9012": 50.00,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -133,7 +136,7 @@ func Test_CalculatePriceForRandomNumberOfTruckItems(t *testing.T) {
 	//ARRANGE
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
-			"ART5555": 175.0,
+			"ART5555": 99.0,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -142,6 +145,7 @@ func Test_CalculatePriceForRandomNumberOfTruckItems(t *testing.T) {
 	numberOfItems := rand.Intn(20)
 	for i := 0; i < numberOfItems; i++ {
 		items = append(items, itempricecalculator.Item{
+			ID:       "ART5555",
 			Type:     "TRUCK",
 			Quantity: 1,
 		})
@@ -160,7 +164,7 @@ func Test_CalculatePriceForOneParcelItem(t *testing.T) {
 	//ARRANGE
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
-			"ART5555": 175.0,
+			"ART1234": 9.0,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -185,7 +189,8 @@ func Test_CalculatePriceForTwoParcelItems(t *testing.T) {
 	//ARRANGE
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
-			"ART5555": 175.0,
+			"ART1234": 9.0,
+			"ART5678": 9.0,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -215,7 +220,7 @@ func Test_CalculatePriceForRandomNumberOfParcels(t *testing.T) {
 	//ARRANGE
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
-			"ART5555": 175.0,
+			"ART5555": 9.0,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -226,6 +231,7 @@ func Test_CalculatePriceForRandomNumberOfParcels(t *testing.T) {
 		items = append(items, itempricecalculator.Item{
 			Type:     "PARCEL",
 			Quantity: 1,
+			ID:       "ART5555",
 		})
 	}
 
@@ -243,7 +249,8 @@ func Test_CalculatePriceForRandomAmountOfParcelAndTruckItems(t *testing.T) {
 	//ARRANGE
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
-			"ART5555": 175.0,
+			"ART5555": 99.0,
+			"ART1234": 9.0,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -254,6 +261,7 @@ func Test_CalculatePriceForRandomAmountOfParcelAndTruckItems(t *testing.T) {
 		items = append(items, itempricecalculator.Item{
 			Type:     "TRUCK",
 			Quantity: 1,
+			ID:       "ART5555",
 		})
 	}
 
@@ -262,6 +270,7 @@ func Test_CalculatePriceForRandomAmountOfParcelAndTruckItems(t *testing.T) {
 		items = append(items, itempricecalculator.Item{
 			Type:     "PARCEL",
 			Quantity: 1,
+			ID:       "ART1234",
 		})
 	}
 
@@ -305,17 +314,17 @@ func Test_CalculatePriceForTypoInItemType(t *testing.T) {
 		"Test mixed casing Parcel": {
 			items: []itempricecalculator.Item{
 				{
-					ID:       "ART1234",
+					ID:       "ART4444",
 					Type:     "paRcel",
 					Quantity: 1,
 				},
 				{
-					ID:       "ART5678",
+					ID:       "ART5555",
 					Type:     "Parcel",
 					Quantity: 1,
 				},
 				{
-					ID:       "ART9012",
+					ID:       "ART7777",
 					Type:     "PARcel",
 					Quantity: 1,
 				},
@@ -326,7 +335,12 @@ func Test_CalculatePriceForTypoInItemType(t *testing.T) {
 
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
-			"ART5555": 175.0,
+			"ART5555": 9.0,
+			"ART1234": 50.00,
+			"ART5678": 50.00,
+			"ART9012": 50.00,
+			"ART4444": 9.0,
+			"ART7777": 9.0,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -433,7 +447,7 @@ func Test_ItemIsAParcelOrTruckItem(t *testing.T) {
 		"Test item is a parcel item": {
 			items: []itempricecalculator.Item{
 				{
-					ID:       "ART1234",
+					ID:       "ART4444",
 					Type:     "PARCEL",
 					Quantity: 1,
 				},
@@ -470,6 +484,8 @@ func Test_ItemIsAParcelOrTruckItem(t *testing.T) {
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
 			"ART5555": 175.0,
+			"ART1234": 50.00,
+			"ART4444": 9.0,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -493,7 +509,7 @@ func Test_CalculatePriceForItemsWithQuantityInformationForTruck(t *testing.T) {
 	//ARRANGE
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
-			"ART5555": 175.0,
+			"ART1234": 80.0,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -518,7 +534,7 @@ func Test_CalculatePriceForItemsWithQuantityInformationForParcel(t *testing.T) {
 	//ARRANGE
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
-			"ART5555": 175.0,
+			"ART1234": 9.0,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -543,7 +559,8 @@ func Test_CalculatePriceForItemsWithRandomQuantityInformationForParcelAndTruck(t
 	//ARRANGE
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
-			"ART5555": 175.0,
+			"ART1234": 99.0,
+			"ART5678": 9.0,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -577,7 +594,7 @@ func Test_ReturnAnErrorForItemsWithMissingQuantity(t *testing.T) {
 	//ARRANGE
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
-			"ART5555": 175.0,
+			"ART5555": 99.0,
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
@@ -716,6 +733,32 @@ func Test_TruckWithoutWeightInfoShouldBeAssumedOverweightLimit(t *testing.T) {
 	weightProvider := mockWeightProvider{
 		itemWeight: map[string]float64{
 			"ART1444": 0.0,
+		},
+	}
+	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
+	items := []itempricecalculator.Item{
+		{
+			ID:       "ART1444",
+			Type:     "TRUCK",
+			Quantity: 1,
+		},
+	}
+
+	//ACT
+	price, err := itemPriceCalculator.CalculatePrice(items)
+
+	//ASSERT
+	assert.Equal(t, 150.0, price)
+	assert.Nil(t, err)
+}
+
+func Test_TruckWithMissingWeightInfoShouldBeAssumedOverweightLimit(t *testing.T) {
+	t.Parallel()
+
+	//ARRANGE
+	weightProvider := mockWeightProvider{
+		itemWeight: map[string]float64{
+			// Weight missing.
 		},
 	}
 	itemPriceCalculator := itempricecalculator.NewItemPriceCalculator(&weightProvider)
